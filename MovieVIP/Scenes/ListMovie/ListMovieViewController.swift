@@ -15,24 +15,34 @@ protocol ListMovieDisplayLogic: AnyObject {
 class ListMovieViewController: UITableViewController {
     
     private var movies: [Movie] = []
-    private var interactor: ListMovieDataLogic?
     
-    private enum TableViewState {
+    var interactor: ListMovieDataLogic?
+    
+    enum TableViewState {
         case empty
         case loading
         case error
         case populated
     }
     
-    private var state: TableViewState = .empty {
+    var state: TableViewState = .empty {
         didSet {
             tableView.reloadData()
         }
     }
     
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
         setupView()
     }
     
@@ -93,6 +103,7 @@ extension ListMovieViewController: ListMovieDisplayLogic {
     }
     
     func displayErrorMessage(error: ErrorResponse) {
+        self.state = .error
         print("error message \(error.rawValue)")
         // display error state view here
     }
