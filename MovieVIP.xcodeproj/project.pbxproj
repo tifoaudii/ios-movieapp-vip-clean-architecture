@@ -209,9 +209,9 @@
 		CEC6D3E8257B39BA00C0DF2F /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				CEF6E329259C28B60060D691 /* AppRouter.swift */,
 				CEF6E336259C2B810060D691 /* DIContainer */,
 				CEF6E32E259C2AA30060D691 /* Delegate */,
+				CEF6E329259C28B60060D691 /* AppRouter.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
