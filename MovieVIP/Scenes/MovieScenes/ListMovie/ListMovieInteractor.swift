@@ -17,9 +17,15 @@ protocol ListMovieDataStore {
 
 class ListMovieInteractor: ListMovieDataLogic, ListMovieDataStore {
     
-    var presenter: ListMoviePresentationLogic?
-    var movieService: MovieService = MovieService(movieStore: MovieDataStore())
+    private let presenter: ListMoviePresentationLogic
+    private let movieService: MovieService
+    
     var movies: [Movie]?
+    
+    init(presenter: ListMoviePresentationLogic, movieService: MovieService) {
+        self.presenter = presenter
+        self.movieService = movieService
+    }
     
     func fetchMovies() {
         movieService.fetchMovies { [weak self] (movies: [Movie]) in
@@ -28,13 +34,13 @@ class ListMovieInteractor: ListMovieDataLogic, ListMovieDataStore {
             }
             
             self.movies = movies
-            self.presenter?.displayMovies(movies: movies)
+            self.presenter.displayMovies(movies: movies)
         } onFailure: { [weak self] (error: ErrorResponse) in
             guard let self = self else {
                 return
             }
             
-            self.presenter?.displayErrorMessage(error: error)
+            self.presenter.displayErrorMessage(error: error)
         }
     }
 }

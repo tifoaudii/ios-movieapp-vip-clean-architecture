@@ -16,7 +16,7 @@ class ListMovieViewController: UITableViewController {
     
     private var movies: [Movie] = []
     
-    var interactor: ListMovieDataLogic?
+    private let interactor: ListMovieDataLogic
     
     enum TableViewState {
         case empty
@@ -31,14 +31,13 @@ class ListMovieViewController: UITableViewController {
         }
     }
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        setup()
+    init(interactor: ListMovieDataLogic) {
+        self.interactor = interactor
+        super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -48,16 +47,7 @@ class ListMovieViewController: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        interactor?.fetchMovies()
-    }
-    
-    private func setup() {
-        let viewController = self
-        let interactor = ListMovieInteractor()
-        let presenter = ListMoviePresenter()
-        viewController.interactor = interactor
-        interactor.presenter = presenter
-        presenter.viewController = viewController
+        interactor.fetchMovies()
     }
     
     private func setupView() {

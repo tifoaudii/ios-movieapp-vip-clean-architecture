@@ -9,14 +9,21 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
+    let appDIContainer = AppDIContainer()
+    
     var window: UIWindow?
-
+    var appRouter: AppRouter?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         window?.windowScene = windowScene
-        window?.rootViewController = ListMovieViewController(nibName: nil, bundle: nil)
+        
+        let navigationController = UINavigationController()
+        window?.rootViewController = navigationController
+        
+        let appRouter: AppRouter = AppRouter(navigationController: navigationController, appDIContainer: appDIContainer)
+        appRouter.startRoute()
         window?.makeKeyAndVisible()
     }
 
