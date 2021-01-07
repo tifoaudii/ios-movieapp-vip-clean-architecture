@@ -9,7 +9,7 @@ import Foundation
 
 class MovieDataStore: MovieStoreProtocol {
     
-    private let apiKey = "ae5b867ee790efe19598ff6108ad4e02"
+    private let apiKey = "xxx-xxx-xxx"
     private let baseUrl = "https://api.themoviedb.org/3"
     private let urlSession = URLSession.shared
     

@@ -16,13 +16,9 @@ class ListMovieInteractorTest: XCTestCase {
         case success
         case failed
     }
-    
-    // MARK:- Subject Under Test
-    var sut: ListMovieInteractor!
 
     override func setUpWithError() throws {
         try super.setUpWithError()
-        sut = ListMovieInteractor()
     }
 
     override func tearDownWithError() throws {
@@ -57,11 +53,10 @@ class ListMovieInteractorTest: XCTestCase {
         
         override func fetchMovies(onSuccess: @escaping ([Movie]) -> Void, onFailure: @escaping (ErrorResponse) -> Void) {
             fetchMoviesCalled = true
-            if testScenario == .success {
-                onSuccess([])
-            } else {
-                let mockErrorResponse = ErrorResponse.invalidResponse
-                onFailure(mockErrorResponse)
+            self.movieStore.fetchMovies { (response: MoviesResponse) in
+                onSuccess(response.results)
+            } failure: { (error: ErrorResponse) in
+                onFailure(error)
             }
         }
     }
@@ -93,46 +88,42 @@ class ListMovieInteractorTest: XCTestCase {
     func testFetchMoviesShouldAskMovieServiceToFetch() {
         
         //Given
-        let mockMovieService = MockMovieService(testScenario: .success)
-        sut.movieService = mockMovieService
+        let presenter = MockListMoviePresenter()
+        let service = MockMovieService(testScenario: .success)
+        let interactor = ListMovieInteractor(presenter: presenter, movieService: service)
         
         //When
-        sut.fetchMovies()
+        interactor.fetchMovies()
         
         //Then
-        XCTAssert(mockMovieService.fetchMoviesCalled, "Movie Service should fetch the movie from endpoint")
+        XCTAssert(service.fetchMoviesCalled, "Movie Service should fetch the movie from endpoint")
     }
     
     func testFetchMovieShouldAskPresenterToDisplayTheMovies() {
         
         //Given
-        let mockMovieService = MockMovieService(testScenario: .success)
-        
-        let mockListMoviePresenter = MockListMoviePresenter()
-        
-        sut.presenter = mockListMoviePresenter
-        sut.movieService = mockMovieService
+        let presenter = MockListMoviePresenter()
+        let service = MockMovieService(testScenario: .success)
+        let interactor = ListMovieInteractor(presenter: presenter, movieService: service)
         
         // When
-        sut.fetchMovies()
+        interactor.fetchMovies()
         
         // Then
-        XCTAssert(mockListMoviePresenter.displayMoviesCalled, "Presenter should display the movies after finish fetch it")
+        XCTAssert(presenter.displayMoviesCalled, "Presenter should display the movies after finish fetch it")
     }
     
     func testFetchMovieShouldAskPresenterToDisplayErrorMessageIfRequestNotSucceed() {
         
-        // Given
-        let mockMovieService = MockMovieService(testScenario: .failed)
-        let mockListMoviePresenter = MockListMoviePresenter()
-        
-        sut.presenter = mockListMoviePresenter
-        sut.movieService = mockMovieService
+        //Given
+        let presenter = MockListMoviePresenter()
+        let service = MockMovieService(testScenario: .failed)
+        let interactor = ListMovieInteractor(presenter: presenter, movieService: service)
         
         // When
-        sut.fetchMovies()
+        interactor.fetchMovies()
         
         //Then
-        XCTAssert(mockListMoviePresenter.displayErrorMessageCalled, "Presenter should display error message if failed fetch movies")
+        XCTAssert(presenter.displayErrorMessageCalled, "Presenter should display error message if failed fetch movies")
     }
 }

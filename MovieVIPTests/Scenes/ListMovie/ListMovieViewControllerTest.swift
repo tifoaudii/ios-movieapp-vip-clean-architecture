@@ -11,6 +11,7 @@ import XCTest
 class ListMovieViewControllerTest: XCTestCase {
     
     // MARK:- Subject Under Test
+    var interactor: MockListMovieInteractor!
     var sut: ListMovieViewController!
     var window: UIWindow!
     
@@ -18,12 +19,17 @@ class ListMovieViewControllerTest: XCTestCase {
     override func setUpWithError() throws {
         try super.setUpWithError()
         window = UIWindow()
-        sut = ListMovieViewController(nibName: nil, bundle: nil)
+        prepareSystemUnderTest()
     }
     
     override func tearDownWithError() throws {
         window = nil
         try super.tearDownWithError()
+    }
+    
+    func prepareSystemUnderTest() {
+        interactor = MockListMovieInteractor()
+        sut = ListMovieViewController(interactor: interactor)
     }
     
     func loadView() {
@@ -45,15 +51,13 @@ class ListMovieViewControllerTest: XCTestCase {
     //MARK:- Testcases
     func testShouldFetchMoviesWhenViewDidAppear() {
         // Given
-        let mockListMovieInteractor = MockListMovieInteractor()
-        sut.interactor = mockListMovieInteractor
         loadView()
         
         // When
         sut.viewDidAppear(true)
         
         // Then
-        XCTAssert(mockListMovieInteractor.fetchMoviesCalled, "Should fetch movies when view did appear")
+        XCTAssert(interactor.fetchMoviesCalled, "Should fetch movies when view did appear")
     }
     
     func testTableViewStateShouldPopulated() {

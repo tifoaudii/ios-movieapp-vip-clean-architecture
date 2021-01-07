@@ -102,6 +102,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE229391259C60BA00BE3ACA /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				CEF6E336259C2B810060D691 /* DIContainer */,
+				CEF6E32E259C2AA30060D691 /* BaseDelegate */,
+				CEF6E329259C28B60060D691 /* AppRouter.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		CE229392259C60D600BE3ACA /* Common */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		CE229393259C60E800BE3ACA /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				CED3496425850BC100F4E106 /* Service */,
+				CED349512585082E00F4E106 /* Model */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		CE40BB29259C33F400EE9D6A /* Router */ = {
 			isa = PBXGroup;
 			children = (
@@ -167,9 +193,9 @@
 		CEC6D3AA257B394F00C0DF2F /* MovieVIP */ = {
 			isa = PBXGroup;
 			children = (
-				CED3496425850BC100F4E106 /* Service */,
-				CEC6D3E8257B39BA00C0DF2F /* Base */,
-				CED349512585082E00F4E106 /* Model */,
+				CE229391259C60BA00BE3ACA /* Application */,
+				CE229392259C60D600BE3ACA /* Common */,
+				CE229393259C60E800BE3ACA /* Data */,
 				CEC6D3E1257B397E00C0DF2F /* Scenes */,
 				CEC6D3B4257B395200C0DF2F /* Assets.xcassets */,
 				CEC6D3B6257B395200C0DF2F /* LaunchScreen.storyboard */,
@@ -204,16 +230,6 @@
 				CE40BB2A259C340300EE9D6A /* MovieScenes */,
 			);
 			path = Scenes;
-			sourceTree = "<group>";
-		};
-		CEC6D3E8257B39BA00C0DF2F /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				CEF6E336259C2B810060D691 /* DIContainer */,
-				CEF6E32E259C2AA30060D691 /* Delegate */,
-				CEF6E329259C28B60060D691 /* AppRouter.swift */,
-			);
-			path = Base;
 			sourceTree = "<group>";
 		};
 		CEC6D3EF257B3A6500C0DF2F /* ListMovie */ = {
@@ -252,13 +268,13 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
-		CEF6E32E259C2AA30060D691 /* Delegate */ = {
+		CEF6E32E259C2AA30060D691 /* BaseDelegate */ = {
 			isa = PBXGroup;
 			children = (
 				CEC6D3AB257B394F00C0DF2F /* AppDelegate.swift */,
 				CEC6D3AD257B394F00C0DF2F /* SceneDelegate.swift */,
 			);
-			path = Delegate;
+			path = BaseDelegate;
 			sourceTree = "<group>";
 		};
 		CEF6E336259C2B810060D691 /* DIContainer */ = {
